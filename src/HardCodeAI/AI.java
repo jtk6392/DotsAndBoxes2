@@ -156,7 +156,7 @@ public class AI {
     public void advancedStrat(Box b) {
         Box.Side startSide = getOpenSide(b);
         Box partner = currentBoard.getPartner(b, startSide);
-        Box.Side partnerSide;
+        Box.Side partnerSide = null;
 
         switch (startSide) {
             case EAST:
@@ -228,7 +228,7 @@ public class AI {
                 Board dupBoard = duplicateBoard(currentBoard);
                 TreeMap<Integer, Box> plays = new TreeMap<Integer, Box>();
                 int score = 1000;
-                Box bestBox;
+                Box bestBox = null;
 
                 for (int i = 0; i < currentBoard.getBoardSize(); i++) {
                     for (int j = 0; j < currentBoard.getBoardSize(); j++) {
@@ -247,8 +247,8 @@ public class AI {
                 }
 
                 for (Box.Side side : Box.Side.values()) {
-                    if (!bestBox.getSide(side) && playChain(bestBox)==score){
-                        currentBoard.play(bestBox, this.player, bestBox.getxVal(), bestBox.getyVal());
+                    if (!bestBox.getSide(side) && playChain(bestBox) == score) {
+                        currentBoard.play(side, this.player, bestBox.getxVal(), bestBox.getyVal());
                         madeMove = true;
 
                     }
@@ -284,7 +284,7 @@ public class AI {
         }
     }
 
-    public static void main(String[] args) {
+    private static void test1() {
         boolean madePlay;
         AI HAL = new AI(new Board(2), Users.PLAYER1);
         for (int i = 0; i < 4; i++) {
@@ -294,6 +294,25 @@ public class AI {
             }
         }
         HAL.currentBoard.completePrint();
+    }
+
+    private static void test2() {
+        AI Hal = new AI(new Board(4), Users.PLAYER1);
+        AI Jannett = new AI(Hal.currentBoard, Users.PLAYER2);
+        for (int i = 0; i < 40; i++) {
+            Hal.makePlay(Hal.currentBoard);
+            Jannett.makePlay(Jannett.currentBoard);
+
+            System.out.println("test" + i);
+            Jannett.currentBoard.completePrint();
+            System.out.println("\n ---------------- \n");
+
+        }
+
+    }
+
+    public static void main(String[] args) {
+        test2();
     }
 }
 
