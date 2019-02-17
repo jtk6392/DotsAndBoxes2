@@ -2,6 +2,7 @@ package MachineLearningAI;
 
 import py4j.GatewayServer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class PythonInterface {
@@ -12,6 +13,8 @@ public class PythonInterface {
         return recieveData;
     }
 
+    public ArrayList<Integer> freshList() { return new ArrayList<Integer>(0); }
+
     public void setRecieveData(ArrayList<Integer> recieveData) {
         this.recieveData = recieveData;
     }
@@ -20,14 +23,12 @@ public class PythonInterface {
         this.sendData = sendData;
     }
 
-    public boolean openServer() {
+    public void openServer() throws IOException {
+
         if(sendData.size() > 0) {
             GatewayServer gatewayServer = new GatewayServer(new PythonInterface());
             gatewayServer.start();
-            if(recieveData.size() > 0){
-                sendData = new ArrayList<>(0);
-                return true;
-            }
+            Process p = Runtime.getRuntime().exec("python3 ML.py");
         }
     }
 }
