@@ -20,7 +20,7 @@ public class AI {
      * creates an instance of AI
      *
      * @param currentBoard the Board that the AI and player use
-     * @param player player that makes the move
+     * @param player       idk
      */
     public AI(Board currentBoard, Users player) {
         this.currentBoard = currentBoard;
@@ -171,17 +171,11 @@ public class AI {
             case SOUTH:
                 partnerSide = Box.Side.NORTH;
                 break;
-                
+
         }
-
-        for (Box.Side side : Box.Side.values()) {
-            if (!partner.getSide(side) && side != ) {
-
-            }
-        }        Box.Side partnerSide =hfhgf
-
-        currentBoard.play(partnerSide, this.player, newBox.get)
+        currentBoard.play(partnerSide, this.player, partner.getxVal(), partner.getyVal());
     }
+
 
     public int playChain(Box b, int stop) {
         int numMoves = 0;
@@ -231,12 +225,29 @@ public class AI {
             ArrayList<Box> pointMoves = determinePointMove();
 
             if (pointMoves.size() <= 0 && !determineSafeMove() && !madeMove) {
-                //
+                Board dupBoard = duplicateBoard(currentBoard);
+                TreeMap<Integer, Box> plays = new TreeMap<Integer, Box>();
+
+                for (int i = 0; i < currentBoard.getBoardSize(); i++) {
+                    for (int j = 0; j < currentBoard.getBoardSize(); j++) {
+
+
+                    }
+                }
                 madeMove = true;
             }
 
             if (pointMoves.size() > 0 && !determineSafeMove() && !madeMove) {
+                Board dupBoard = duplicateBoard(currentBoard);
+                TreeMap<Integer, Box> plays = new TreeMap<Integer, Box>();
+                for (Box move : pointMoves) {
+                    Box realMove = dupBoard.getBox(move.getxVal(), move.getyVal());
+                    int numPoints = playChain(realMove);
+                    plays.put(numPoints, realMove);
+                }
 
+                int numMoves = plays.lastKey() - 2;
+                playChain(plays.get(plays.lastKey()), numMoves);
                 madeMove = true;
             }
 
