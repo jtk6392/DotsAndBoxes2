@@ -2,6 +2,7 @@ package MachineLearningAI;
 
 import Game.Board;
 import Game.Box;
+import Game.Users;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 public class ML {
     private Board currentBoard;
     private static PythonInterface server = new PythonInterface();
+    private Users player = Users.PLAYER1;
 
     // Each box: Claimed: add 0, 1, 2
     // North > South > East > West
@@ -38,8 +40,8 @@ public class ML {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // play function call.
+        ArrayList<Integer> moves = server.getRecieveData();
+        currentBoard.play(Box.Side.values()[moves.get(2)], this.player, moves.get(0), moves.get(1));
     }
 
     public static void main(String[] args) {
