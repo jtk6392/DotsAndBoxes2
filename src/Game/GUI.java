@@ -47,9 +47,9 @@ public class GUI extends Application {
         /**
          * Inputs files and sets them to an image
          */
-        FileInputStream istream = new FileInputStream("C:\\Users\\Isodore\\Desktop\\button.png");
-        FileInputStream bstream = new FileInputStream("C:\\Users\\Isodore\\Desktop\\box.png");
-        FileInputStream lstream = new FileInputStream("C:\\Users\\Isodore\\Desktop\\line.png");
+        FileInputStream istream = new FileInputStream("C:\\Users\\Isodore\\Desktop\\resources\\button.png");
+        FileInputStream bstream = new FileInputStream("C:\\Users\\Isodore\\Desktop\\resources\\box.png");
+        FileInputStream lstream = new FileInputStream("C:\\Users\\Isodore\\Desktop\\resources\\line.png");
         Image image = new Image(istream);
         Image box = new Image(bstream);
         Image line = new Image(lstream);
@@ -107,7 +107,7 @@ public class GUI extends Application {
         pane.getChildren().add(grid);
         Group root = new Group(box2);
         pane.getChildren().add(root);
-        root.relocate(15, 16);
+        root.relocate(23, 22);
 
         //StackPane layout = new StackPane();
         //layout.getChildren().add(box2);
