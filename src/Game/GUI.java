@@ -34,6 +34,7 @@ public class GUI extends Application {
     DropShadow shadow;
     int gap;
     int columns;
+    private Object Color;
 
     public GUI(int gap, int columns) {
         this.gap = gap;
@@ -63,14 +64,14 @@ public class GUI extends Application {
         /**
          * Sets the box and line to imageview objects
          */
-   +    //ImageView box2 = new ImageView(box);
+       //ImageView box2 = new ImageView(box);
         //ImageView line2 = new ImageView(line);
 
         /**
          * Sets color for grid background
          *
          */
-        Color redColor = Color.rgb(255, 0, 0, 0.5);
+        Color redColor = Color.
         BackgroundFill backgroundFill = new BackgroundFill(redColor, null, null);
         Background background = new Background(backgroundFill);
 
