@@ -56,15 +56,15 @@ public class GUI extends Application {
          * Creates a square: needs four inputs for the side sizes
          *
          * CHANGE VARIABLE IN RECTANGLE.
-         * 5 x 5: (42)
-         * 6 x 6: (44)
-         * 7 x 7: ()
-         * 8 x 8: (50)
-         * 9 x 9: ()
+         * 5 x 5: (45)
+         * 6 x 6: (48)
+         * 7 x 7: (51)
+         * 8 x 8: (56)
+         * 9 x 9: (57)
          *
          */
         Group root = new Group();
-        Rectangle rectangle = new Rectangle(44, 44, 44, 44);
+        Rectangle rectangle = new Rectangle(57, 57, 57, 57);
         rectangle.setFill(Color.RED);
         root.getChildren().add(rectangle);
 
@@ -79,9 +79,11 @@ public class GUI extends Application {
         /**
          * Makes Tilepane:Grid and sets its values.
          * Make sure that the Pref columns, # of dots, and distance between them are related.
+         *
+         * CHANGE THE VARIABLE HERE
          */
         TilePane grid = new TilePane();
-        grid.setPrefColumns(6);     // SET the amount of columns needed here
+        grid.setPrefColumns(9);     // SET the amount of columns needed here
         grid.setBackground(background);
         grid.resize(490, 540);
 
@@ -96,7 +98,7 @@ public class GUI extends Application {
          * 9 x 9: (81)
          *
          */
-        for (int x = 0; x < 36; x++) {  // SET the of total num of dots here
+        for (int x = 0; x < 81; x++) {  // SET the of total num of dots here
             ImageView imageView = new ImageView(image);
             imageView.addEventHandler(MouseEvent.MOUSE_ENTERED,
                     e -> imageView.setEffect(shadow));
@@ -110,9 +112,16 @@ public class GUI extends Application {
          * Sets the gap between each of
          * the dots both vertically
          * and horizontally.
+         * CHANGE VARIABLE IN FOR LOOP.
+         * 5 x 5: (20)
+         * 6 x 6: (24)
+         * 7 x 7: (28)
+         * 8 x 8: (32)
+         * 9 x 9: (32)
+
          */
-        grid.setHgap(20);   // SET the gap between dots here
-        grid.setVgap(20);
+        grid.setHgap(32);   // SET the gap between dots here
+        grid.setVgap(32);
         Pane pane = new Pane();
         //pane.setBackground(background);
         pane.resize(490, 540);
@@ -121,15 +130,15 @@ public class GUI extends Application {
          * Adds everything to the pane and relocates as necessary.
          *
          CHANGE VARIABLE IN RELOCATE.
-         * 5 x 5: (21, 21)
-         * 6 x 6: ()
-         * 7 x 7: ()
-         * 8 x 8: ()
-         * 9 x 9: ()
+         * 5 x 5: (19, 19)
+         * 6 x 6: (19, 19)
+         * 7 x 7: (19, 19)
+         * 8 x 8: (19, 19)
+         * 9 x 9: (19, 19)
          */
         pane.getChildren().add(grid);
         pane.getChildren().add(root);
-        root.relocate(21, 21);  // SET the location of the squares
+        root.relocate(19, 19);  // SET the location of the squares
 
         /**
          * Sets up the scene and loads it into the stage(screen)
