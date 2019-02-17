@@ -71,10 +71,12 @@ public class GUI extends Application {
         /**
          * Creates a horizontal line
          * v, v2: the square length
+         *    5 x 5: (55)
          * v1, v3: the stroke
+         *    5 x 5: (55)
          */
         Group lineX = new Group();
-        Rectangle line_x = new Rectangle(47, 10, 47, 10);
+        Rectangle line_x = new Rectangle(55, 10, 55, 10);
         line_x.setFill(Color.BLACK);
         lineX.getChildren().add(line_x);
 
@@ -156,25 +158,25 @@ public class GUI extends Application {
          * 9 x 9: (19, 19)
          *
          * CHANGE VARIABLE IN RELOCATE LINEx.
-         * 5 x 5: (19, 19)
-         * 6 x 6: (19, 19)
-         * 7 x 7: (19, 19)
-         * 8 x 8: (19, 19)
-         * 9 x 9: (19, 19)
+         * 5 x 5: (13, 13)
+         * 6 x 6: (, )
+         * 7 x 7: (, )
+         * 8 x 8: (, )
+         * 9 x 9: (, )
          *
-         * CHANGE VARIABLE IN RELOCATE LINEx.
-         * 5 x 5: (19, 19)
-         * 6 x 6: (19, 19)
-         * 7 x 7: (19, 19)
-         * 8 x 8: (19, 19)
-         * 9 x 9: (19, 19)
+         * CHANGE VARIABLE IN RELOCATE LINEy.
+         * 5 x 5: (13, 19)
+         * 6 x 6: (, )
+         * 7 x 7: (, )
+         * 8 x 8: (, )
+         * 9 x 9: (, )
          */
         pane.getChildren().add(grid);
         pane.getChildren().add(box);
         pane.getChildren().add(lineX);
         pane.getChildren().add(lineY);
         box.relocate(19, 19);  // SET the location of the squares
-        lineX.relocate(19, 13);  // SET the location of lineX
+        lineX.relocate(13, 13);  // SET the location of lineX
         lineY.relocate(13, 19);     // SET the location of lineY
 
         /**
