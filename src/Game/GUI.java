@@ -54,12 +54,16 @@ public class GUI extends Application {
         Image image = new Image(istream);
 
         /**
-         * Creates a box
+         * Creates a square: needs four inputs for the side sizes
+         *
+         * 5 x 5: (42)
+         *
          */
         Group root = new Group();
         Rectangle rectangle = new Rectangle(42, 42, 42, 42);
         rectangle.setFill(Color.RED);
         root.getChildren().add(rectangle);
+
 
         /**
          * Sets color for grid background
@@ -73,14 +77,14 @@ public class GUI extends Application {
          * Make sure that the Pref columns, # of dots, and distance between them are related.
          */
         TilePane grid = new TilePane();
-        grid.setPrefColumns(5);
+        grid.setPrefColumns(5);     // SET the amount of columns needed here
         grid.setBackground(background);
         grid.resize(490, 540);
 
         /**
          * Adds hover effect to the dots.
          */
-        for (int x = 0; x < 25; x++) {
+        for (int x = 0; x < 25; x++) {  // SET the of total num of dots here
             ImageView imageView = new ImageView(image);
             imageView.addEventHandler(MouseEvent.MOUSE_ENTERED,
                     e -> imageView.setEffect(shadow));
@@ -95,7 +99,7 @@ public class GUI extends Application {
          * the dots both vertically
          * and horizontally.
          */
-        grid.setHgap(20);
+        grid.setHgap(20);   // SET the gap between dots here
         grid.setVgap(20);
         Pane pane = new Pane();
         //pane.setBackground(background);
@@ -106,7 +110,7 @@ public class GUI extends Application {
          */
         pane.getChildren().add(grid);
         pane.getChildren().add(root);
-        root.relocate(21, 21);
+        root.relocate(21, 21);  // SET the location of the squares
 
         /**
          * Sets up the scene and loads it into the stage(screen)
