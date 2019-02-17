@@ -46,6 +46,8 @@ public class GUI extends Application {
         x = 20;
         y = 20;
 
+
+
         /**
          * Inputs files and sets them to an image
          */
