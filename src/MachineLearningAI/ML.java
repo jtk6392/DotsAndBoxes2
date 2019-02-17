@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class ML {
     private Board currentBoard;
-    private PythonInterface server = new PythonInterface();
+    private static PythonInterface server = new PythonInterface();
 
     // Each box: Claimed: add 0, 1, 2
     // North > South > East > West
