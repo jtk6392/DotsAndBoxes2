@@ -42,7 +42,7 @@ def tensor_flow(list):
         loss=tf.keras.losses.categorical_crossentropy, \
         metrics=[tf.keras.metrics.categorical_accuracy]
 
-    log = model.callbacks.CSVLogger($txt, separator=",", append=False)
+    log = model.callbacks.CSVLogger('my_file.csv', separator=",", append=False)
 
     model.fit(data, epoch=10, batch_size=data.size(), callback=["log"]
 
