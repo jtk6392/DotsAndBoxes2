@@ -107,7 +107,11 @@ public class GUI extends Application {
         pane.getChildren().add(grid);
         Group root = new Group(box2);
         pane.getChildren().add(root);
-        root.relocate(23, 22);
+        //root.relocate(23, 22);
+        //x diff 64
+        //y diff 64
+
+        root.relocate(23, 86);
 
         //StackPane layout = new StackPane();
         //layout.getChildren().add(box2);
