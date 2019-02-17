@@ -41,4 +41,11 @@ public class ML {
 
         // play function call.
     }
+
+    public static void main(String[] args) {
+        ML bob = new ML();
+        Board b = new Board();
+
+        bob.makePlay(b);
+    }
 }
