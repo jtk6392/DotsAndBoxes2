@@ -315,4 +315,3 @@ public class AI {
         test2();
     }
 }
-
