@@ -1,4 +1,3 @@
-
 package Game;
 
 //Import statements
@@ -56,11 +55,16 @@ public class GUI extends Application {
         /**
          * Creates a square: needs four inputs for the side sizes
          *
+         * CHANGE VARIABLE IN RECTANGLE.
          * 5 x 5: (42)
+         * 6 x 6: (44)
+         * 7 x 7: ()
+         * 8 x 8: (50)
+         * 9 x 9: ()
          *
          */
         Group root = new Group();
-        Rectangle rectangle = new Rectangle(42, 42, 42, 42);
+        Rectangle rectangle = new Rectangle(44, 44, 44, 44);
         rectangle.setFill(Color.RED);
         root.getChildren().add(rectangle);
 
@@ -77,14 +81,22 @@ public class GUI extends Application {
          * Make sure that the Pref columns, # of dots, and distance between them are related.
          */
         TilePane grid = new TilePane();
-        grid.setPrefColumns(5);     // SET the amount of columns needed here
+        grid.setPrefColumns(6);     // SET the amount of columns needed here
         grid.setBackground(background);
         grid.resize(490, 540);
 
         /**
-         * Adds hover effect to the dots.
+         * Adds hover effect to the dots and gets the number of dots created.
+         *
+         * CHANGE VARIABLE IN FOR LOOP.
+         * 5 x 5: (25)
+         * 6 x 6: (36)
+         * 7 x 7: (49)
+         * 8 x 8: (64)
+         * 9 x 9: (81)
+         *
          */
-        for (int x = 0; x < 25; x++) {  // SET the of total num of dots here
+        for (int x = 0; x < 36; x++) {  // SET the of total num of dots here
             ImageView imageView = new ImageView(image);
             imageView.addEventHandler(MouseEvent.MOUSE_ENTERED,
                     e -> imageView.setEffect(shadow));
@@ -107,6 +119,13 @@ public class GUI extends Application {
 
         /**
          * Adds everything to the pane and relocates as necessary.
+         *
+         CHANGE VARIABLE IN RELOCATE.
+         * 5 x 5: (21, 21)
+         * 6 x 6: ()
+         * 7 x 7: ()
+         * 8 x 8: ()
+         * 9 x 9: ()
          */
         pane.getChildren().add(grid);
         pane.getChildren().add(root);
