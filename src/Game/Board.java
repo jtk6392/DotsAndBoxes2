@@ -171,25 +171,37 @@ public class Board implements Cloneable {
      * @param s the side being checked
      * @param b box
      */
-    public void claimSharedSide(Box.Side s, Box b) {
-        switch (s) {
-            case NORTH:
-                getPartner(b, s).setSide(Box.Side.SOUTH);
-                b.setSide(s);
-                break;
-            case SOUTH:
-                getPartner(b, s).setSide(Box.Side.NORTH);
-                b.setSide(s);
-                break;
-            case EAST:
-                getPartner(b, s).setSide(Box.Side.WEST);
-                b.setSide(s);
-                break;
-            case WEST:
-                getPartner(b, s).setSide(Box.Side.EAST);
-                b.setSide(s);
-                break;
+    public void claimSide(Box.Side s, Box b) {
+        b.setSide(s);
+        b.checkClaimed(this.currentPlayer);
+        if (hasPartner(b, s)) {
+            Box partner = getPartner(b, s)
+            switch (s) {
+                case NORTH:
+                    partner.setSide(Box.Side.SOUTH);
+                    break;
+                case SOUTH:
+                    partner.setSide(Box.Side.NORTH);
+                    break;
+                case EAST:
+                    partner.setSide(Box.Side.WEST);
+                    break;
+                case WEST:
+                    partner.setSide(Box.Side.EAST);
+                    break;
+            }
+            partner.checkClaimed(this.currentPlayer);
+
         }
+    }
+
+    public boolean updateScore(int i, int j) {
+        int claim = boxArray[i][j].getClaimed();
+        if (claim != 0) {
+            this.score[claim - 1]++;
+            return true;
+        }
+        return false;
     }
 
 
@@ -263,20 +275,23 @@ public class Board implements Cloneable {
      */
     public boolean play(Box.Side bs, Users player, int i, int j) {
         boolean boxSide = boxArray[i][j].getSide(bs);
+        Box box1 = boxArray[i][j];
+        boolean score2 = false;
         if (!boxSide) {
-            if (hasPartner(boxArray[i][j], bs)) {
-                claimSharedSide(bs, boxArray[i][j]);
-            } else {
-                boxArray[i][j].setSide(bs);
+
+            claimSide(bs, box1);
+            boolean score1 = this.updateScore(i, j);
+
+
+            if (this.hasPartner(box1, bs)) {
+                Box box2 = this.getPartner(box1, bs);
+                score2 = this.updateScore(box2.getxVal(), box2.getyVal());
             }
 
-            int claim = boxArray[i][j].checkClaimed(player);
-            if (claim != 0) {
-                this.score[claim - 1]++;
-                this.currentPlayer = Users.values()[claim - 1];
-            } else {
-                this.currentPlayer = (this.currentPlayer == Users.PLAYER1 ? Users.PLAYER2 : Users.PLAYER1);
+            if (!score1 && !score2) {
+                this.currentPlayer = this.currentPlayer == Users.PLAYER1 ? Users.PLAYER2 : Users.PLAYER1;
             }
+
             return true;
         }
         return false;
@@ -289,24 +304,23 @@ public class Board implements Cloneable {
      * 0 0 0 0
      * 0 0 0 0
      * 0 0 0 0
-     *
+     * <p>
      * 2 1 0 0
      * 0 0 0 0
      * 0 0 0 0
      * 0 0 0 0
-     *
+     * <p>
      * ------
      * |2||1||0  0
      * ------
      * ------
-     *  0  0  0  0
-     *
-     *
-     *  0  0  0  0
-     *
-     *
-     *  0  0  0  0
-     *
+     * 0  0  0  0
+     * <p>
+     * <p>
+     * 0  0  0  0
+     * <p>
+     * <p>
+     * 0  0  0  0
      */
     public static void test1() {
         Board b = new Board();

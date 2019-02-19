@@ -140,6 +140,7 @@ public class Box {
                 south = true;
             }
         }
+
     }
 
     /**
@@ -149,7 +150,7 @@ public class Box {
      * @param player The player that claimed the box.
      * @return 0 if unclaimed, 1 if player1, 2 if player2
      */
-    public int checkClaimed(Users player) {
+    public void checkClaimed(Users player) {
         if (this.claimedSides == 4) {
             //Based on which player's turn it is.
             if (player == Users.PLAYER1) {
@@ -158,7 +159,6 @@ public class Box {
                 this.claimed = 2;
             }
         }
-        return this.claimed;
     }
 
     /**
