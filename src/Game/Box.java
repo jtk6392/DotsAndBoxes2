@@ -5,7 +5,14 @@ package Game;
  */
 public class Box {
 
+    /**
+     * index of first dimension of Box's position
+     */
     private final int xVal; // x index ( i ) in the board.
+
+    /**
+     * index of second dimension of Box's position
+     */
     private final int yVal; // y index ( j ) in the borad.
 
     /**
@@ -18,12 +25,34 @@ public class Box {
         WEST
     }
 
-    //Fields
+    /**
+     * North edge of box, true is claimed, false if unclaimed
+     */
     private boolean north;
+
+    /**
+     * South edge of box, true is claimed, false if unclaimed
+     */
     private boolean south;
+
+    /**
+     * East edge of box, true is claimed, false if unclaimed
+     */
     private boolean east;
+
+    /**
+     * West edge of box, true is claimed, false if unclaimed
+     */
     private boolean west;
+
+    /**
+     * integer showing ownership, 0:None, 1:Player1, 2:Player2
+     */
     private int claimed;
+
+    /**
+     * number of claimed sides
+     */
     private int claimedSides;
 
     /**
@@ -40,6 +69,54 @@ public class Box {
         east = false;
         west = false;
         claimed = 0;
+    }
+
+    /**
+     * Returns the x index in the board ( i )
+     *
+     * @return int representing the x index in the board.
+     */
+    public int getxVal() {
+        return xVal;
+    }
+
+    /**
+     * Returns the y index in the board ( j )
+     *
+     * @return int representing the y index in the board.
+     */
+    public int getyVal() {
+        return yVal;
+    }
+
+    /**
+     * returns integer corresponding to the owner of this box
+     *
+     * @return
+     */
+    public int getClaimedSides() {
+        return this.claimedSides;
+    }
+
+    /**
+     * Returns the state of the specified side.
+     *
+     * @param s The side to check.
+     * @return true if the side is claimed; otherwise, false.
+     */
+    public boolean getSide(Side s) {
+        switch (s) {
+            case EAST:
+                return this.east;
+            case WEST:
+                return this.west;
+            case NORTH:
+                return this.north;
+            case SOUTH:
+                return this.south;
+            default:
+                return false;
+        }
     }
 
     /**
@@ -62,49 +139,6 @@ public class Box {
             if (s == Side.SOUTH) {
                 south = true;
             }
-        }
-    }
-
-    /**
-     * Returns the x index in the board ( i )
-     *
-     * @return int representing the x index in the board.
-     */
-    public int getxVal() {
-        return xVal;
-    }
-
-    /**
-     * Returns the y index in the board ( j )
-     *
-     * @return int representing the y index in the board.
-     */
-    public int getyVal() {
-        return yVal;
-    }
-
-    public int getClaimedSides(){
-        return this.claimedSides;
-    }
-
-    /**
-     * Returns the state of the specified side.
-     *
-     * @param s The side to check.
-     * @return true if the side is claimed; otherwise, false.
-     */
-    public boolean getSide(Side s) {
-        switch (s) {
-            case EAST:
-                return this.east;
-            case WEST:
-                return this.west;
-            case NORTH:
-                return this.north;
-            case SOUTH:
-                return this.south;
-            default:
-                return false;
         }
     }
 
@@ -146,6 +180,11 @@ public class Box {
     }
 
 
+    /**
+     * Override of toString(), prints display of box and surrounding edges
+     *
+     * @return a String
+     */
     @Override
     public String toString() {
         String outString = "*";
@@ -174,7 +213,19 @@ public class Box {
         return outString;
     }
 
-    public static void main(String[] args) {
+    /**
+     * first test case, expected result:
+     * * *
+     * 0
+     * * *
+     * * *
+     * |0
+     * *-*
+     * *-*
+     * |0|
+     * *-*
+     */
+    public static void test1() {
         Box b = new Box(0, 0);
         System.out.println(b);
         b.south = true;
@@ -184,6 +235,15 @@ public class Box {
         b.east = true;
         int n = b.checkClaimed(Users.PLAYER1);
         System.out.println(b);
+    }
+
+    /**
+     * Test function for board.
+     *
+     * @param args unused.
+     */
+    public static void main(String[] args) {
+        test1();
     }
 }
 

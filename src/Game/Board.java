@@ -1,6 +1,7 @@
 package Game;
 
 public class Board implements Cloneable {
+
     /**
      * Sets the current player.
      */
@@ -43,134 +44,57 @@ public class Board implements Cloneable {
         score[2] = n * n;  // total score
     }
 
+    /**
+     * returns the dimesion of the board
+     *
+     * @return int
+     */
     public int getBoardSize() {
         return this.boxArray.length;
     }
 
-    public int[] getScore(){
+    /**
+     * returns score array
+     *
+     * @return int[]
+     */
+    public int[] getScore() {
         return this.score;
     }
 
-    public void setScore(int[] score){
+    /**
+     * sets the score to the desired array
+     *
+     * @param score new array to overwrite old one
+     */
+    public void setScore(int[] score) {
         this.score = score;
     }
 
 
     /**
-     * Sets the state of the size of the box to true
-     * and update and check and see if a box if finished.
-     * If user tries to claim a side taken return false
+     * Returns a box at a given index in the board.
      *
-     * @param bs     box side
-     * @param player the player
-     * @param i      index of the row
-     * @param j      index of the column
-     * @return true or false
+     * @param i the column of the box
+     * @param j the row of the box.
+     * @return A box.
      */
-    public boolean play(Box.Side bs, Users player, int i, int j) {
-        boolean boxSide = boxArray[i][j].getSide(bs);
-        if (!boxSide) {
-            if (hasPartner(boxArray[i][j], bs)) {
-                claimSharedSide(bs, boxArray[i][j]);
-            } else {
-                boxArray[i][j].setSide(bs);
-            }
-
-            int claim = boxArray[i][j].checkClaimed(player);
-            if (claim != 0) {
-                this.score[claim-1]++;
-                this.currentPlayer = Users.values()[claim - 1];
-            }else{
-                this.currentPlayer = (this.currentPlayer == Users.PLAYER1 ? Users.PLAYER2 : Users.PLAYER1);
-                }
-            return true;
-            }
-        return false;
+    public Box getBox(int i, int j) {
+        return boxArray[i][j];
     }
 
 
     /**
-     * Checks for the shared side and sees if the side is the boarder of the box
+     * overwrite a box at i, j with Box b
      *
-     * @param s the side being checked
-     * @param b box
+     * @param i 1 dimension in array
+     * @param j 2 dimension in array
+     * @param b b to replace old box
      */
-    public void claimSharedSide(Box.Side s, Box b) {
-        switch (s) {
-            case NORTH:
-                getPartner(b, s).setSide(Box.Side.SOUTH);
-                b.setSide(s);
-                break;
-            case SOUTH:
-                getPartner(b, s).setSide(Box.Side.NORTH);
-                b.setSide(s);
-                break;
-            case EAST:
-                getPartner(b, s).setSide(Box.Side.WEST);
-                b.setSide(s);
-                break;
-            case WEST:
-                getPartner(b, s).setSide(Box.Side.EAST);
-                b.setSide(s);
-                break;
-        }
-//        }
+    public void setBox(int i, int j, Box b) {
+        this.boxArray[i][j] = b;
     }
 
-    /**
-     * Returns a string representation of the board.
-     *
-     * @return An n*n string representing the board for debugging.
-     */
-    @Override
-    public String toString() {
-        String outString = "";
-        int[] claims = new int[this.boxArray.length * this.boxArray.length];
-        for (int i = 0; i < this.boxArray.length; i++) {
-            for (int j = 0; j < this.boxArray.length; j++) {
-                claims[i + j] = this.boxArray[i][j].getClaimed();
-            }
-        }
-        int k = 0;
-        for (int i = 0; i < claims.length; i++) {
-            outString += claims[i] + " ";
-            k++;
-            if (k == this.boxArray.length) {
-                outString += "\n";
-                k = 0;
-            }
-        }
-        return outString;
-    }
-
-    public void completePrint() {
-        for (int j = 0; j < this.boxArray.length; j++) {
-            String line1 = "";
-            String line2 = "";
-            String line3 = "";
-            for (int i = 0; i < this.boxArray.length; i++) {
-                Box currentBox = getBox(i, j);
-                line1 += currentBox.getSide(Box.Side.NORTH) ? "---" : "   ";
-                line2 += currentBox.getSide(Box.Side.WEST) ? "|" : " ";
-                line2 += currentBox.getClaimed() == 0 ? "0" : currentBox.getClaimed() == 1 ? "1" : "2";
-                line2 += currentBox.getSide(Box.Side.EAST) ? "|" : " ";
-                line3 += currentBox.getSide(Box.Side.SOUTH) ? "---" : "   ";
-            }
-            System.out.println(line1);
-            System.out.println(line2);
-            System.out.println(line3);
-        }
-    }
-
-    /**
-     * This checks the number of boxes
-     * When there are no moves are
-     * <p>
-     * if player 1 claimed = player 2 claim then it equals the number of boxes
-     */
-    public static void Win(Users p1, Users p2, Box b) {
-//        if (score[0])
-    }
 
     /**
      * Checks if a box at a specific index has an adjacent side.
@@ -240,27 +164,151 @@ public class Board implements Cloneable {
         }
     }
 
-    /**
-     * Returns a box at a given index in the board.
-     *
-     * @param i the column of the box
-     * @param j the row of the box.
-     * @return A box.
-     */
-    public Box getBox(int i, int j) {
-        return boxArray[i][j];
-    }
-
-    public void setBox(int i, int j, Box b){
-        this.boxArray[i][j] = b;
-    }
 
     /**
-     * Test function for board.
+     * Checks for the shared side and sees if the side is the boarder of the box
      *
-     * @param args unused.
+     * @param s the side being checked
+     * @param b box
      */
-    public static void main(String[] args) {
+    public void claimSharedSide(Box.Side s, Box b) {
+        switch (s) {
+            case NORTH:
+                getPartner(b, s).setSide(Box.Side.SOUTH);
+                b.setSide(s);
+                break;
+            case SOUTH:
+                getPartner(b, s).setSide(Box.Side.NORTH);
+                b.setSide(s);
+                break;
+            case EAST:
+                getPartner(b, s).setSide(Box.Side.WEST);
+                b.setSide(s);
+                break;
+            case WEST:
+                getPartner(b, s).setSide(Box.Side.EAST);
+                b.setSide(s);
+                break;
+        }
+    }
+
+
+    /**
+     * This checks the number of boxes
+     * When there are no moves are
+     * <p>
+     * if player 1 claimed = player 2 claim then it equals the number of boxes
+     */
+    public static void Win(Users p1, Users p2, Box b) {
+
+    }
+
+    public void completePrint() {
+        for (int j = 0; j < this.boxArray.length; j++) {
+            String line1 = "";
+            String line2 = "";
+            String line3 = "";
+            for (int i = 0; i < this.boxArray.length; i++) {
+                Box currentBox = getBox(i, j);
+                line1 += currentBox.getSide(Box.Side.NORTH) ? "---" : "   ";
+                line2 += currentBox.getSide(Box.Side.WEST) ? "|" : " ";
+                line2 += currentBox.getClaimed() == 0 ? "0" : currentBox.getClaimed() == 1 ? "1" : "2";
+                line2 += currentBox.getSide(Box.Side.EAST) ? "|" : " ";
+                line3 += currentBox.getSide(Box.Side.SOUTH) ? "---" : "   ";
+            }
+            System.out.println(line1);
+            System.out.println(line2);
+            System.out.println(line3);
+        }
+    }
+
+
+    /**
+     * Returns a string representation of the board.
+     *
+     * @return An n*n string representing the board for debugging.
+     */
+    @Override
+    public String toString() {
+        String outString = "";
+        int[] claims = new int[this.boxArray.length * this.boxArray.length];
+        for (int i = 0; i < this.boxArray.length; i++) {
+            for (int j = 0; j < this.boxArray.length; j++) {
+                claims[i + j] = this.boxArray[i][j].getClaimed();
+            }
+        }
+        int k = 0;
+        for (int i = 0; i < claims.length; i++) {
+            outString += claims[i] + " ";
+            k++;
+            if (k == this.boxArray.length) {
+                outString += "\n";
+                k = 0;
+            }
+        }
+        return outString;
+    }
+
+
+    /**
+     * Sets the state of the size of the box to true
+     * and update and check and see if a box if finished.
+     * If user tries to claim a side taken return false
+     *
+     * @param bs     box side
+     * @param player the player
+     * @param i      index of the row
+     * @param j      index of the column
+     * @return true or false
+     */
+    public boolean play(Box.Side bs, Users player, int i, int j) {
+        boolean boxSide = boxArray[i][j].getSide(bs);
+        if (!boxSide) {
+            if (hasPartner(boxArray[i][j], bs)) {
+                claimSharedSide(bs, boxArray[i][j]);
+            } else {
+                boxArray[i][j].setSide(bs);
+            }
+
+            int claim = boxArray[i][j].checkClaimed(player);
+            if (claim != 0) {
+                this.score[claim - 1]++;
+                this.currentPlayer = Users.values()[claim - 1];
+            } else {
+                this.currentPlayer = (this.currentPlayer == Users.PLAYER1 ? Users.PLAYER2 : Users.PLAYER1);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * first test case, expected result:
+     * test
+     * 2 0 0 0
+     * 0 0 0 0
+     * 0 0 0 0
+     * 0 0 0 0
+     *
+     * 2 1 0 0
+     * 0 0 0 0
+     * 0 0 0 0
+     * 0 0 0 0
+     *
+     * ------
+     * |2||1||0  0
+     * ------
+     * ------
+     *  0  0  0  0
+     *
+     *
+     *  0  0  0  0
+     *
+     *
+     *  0  0  0  0
+     *
+     */
+    public static void test1() {
         Board b = new Board();
         System.out.println("test");
 
@@ -278,5 +326,15 @@ public class Board implements Cloneable {
         b.play(Box.Side.SOUTH, p1, 1, 0);
         System.out.println(b);
         b.completePrint();
+    }
+
+
+    /**
+     * Test function for board.
+     *
+     * @param args unused.
+     */
+    public static void main(String[] args) {
+        test1();
     }
 }
