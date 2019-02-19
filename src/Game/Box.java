@@ -233,7 +233,7 @@ public class Box {
         System.out.println(b);
         b.north = true;
         b.east = true;
-        int n = b.checkClaimed(Users.PLAYER1);
+        int n = b.getClaimed();
         System.out.println(b);
     }
 

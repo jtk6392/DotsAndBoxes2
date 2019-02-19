@@ -46,6 +46,24 @@ public class AI {
     }
 
     /**
+     * looks through Board array and determines if there is at least one move that satisfies checkMove
+     *
+     * @return true or false if move is viable
+     */
+    private boolean determineSafeMove() {
+        for (int i = 0; i < currentBoard.getBoardSize(); i++) {
+            for (int j = 0; j < currentBoard.getBoardSize(); j++) {
+                for (Box.Side s : Box.Side.values()) {
+                    if (checkMove(i, j, s)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * tests to see if a box has only one unclaimed edge
      *
      * @param b Box b to check
@@ -85,24 +103,6 @@ public class AI {
     }
 
     /**
-     * looks through Board array and determines if there is at least one move that satisfies checkMove
-     *
-     * @return true or false if move is viable
-     */
-    private boolean determineSafeMove() {
-        for (int i = 0; i < currentBoard.getBoardSize(); i++) {
-            for (int j = 0; j < currentBoard.getBoardSize(); j++) {
-                for (Box.Side s : Box.Side.values()) {
-                    if (checkMove(i, j, s)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
      * selects a random move that will not cause the other player to have a scorable box
      */
     private boolean randomMove() {
@@ -126,7 +126,7 @@ public class AI {
                 side = Box.Side.NORTH;
         }
         if (checkMove(i, j, side)) {
-            this.currentBoard.play(side, this.player, i, j);
+            this.currentBoard.play(side, i, j);
             return true;
         } else {
             return false;
@@ -149,10 +149,51 @@ public class AI {
         return null;
     }
 
+    /**
+     * plays through a chain, a chain is a situation where scoring on one box gives you a new opportunity to score
+     * @param b box to play at
+     * @return numMoves made until end, ie no new scorable box was made
+     */
     public int playChain(Box b) {
         return playChain(b, -1);
     }
 
+    /**
+     * plays through a chain, a chain is a situation where scoring on one box gives you a new opportunity to score
+     * @param b box to start playing chain
+     * @param stop how many boxes to score before stopping
+     * @return numMoves made
+     */
+    public int playChain(Box b, int stop) {
+        int numMoves = 0;
+        boolean lastMove = false;
+        while (!lastMove && numMoves < stop) {
+            Box.Side side = getOpenSide(b);
+            Box tempBox = b;
+            if (currentBoard.hasPartner(b, side)) {
+                Box nextBox = currentBoard.getPartner(b, side);
+                b = nextBox;
+                lastMove = false;
+            } else {
+                lastMove = true;
+            }
+            this.currentBoard.play(side, b.getxVal(), b.getyVal());
+
+            numMoves += 1;
+        }
+        if (numMoves == stop) {
+
+        }
+
+        return numMoves;
+    }
+
+    /**
+     * Instead of finishing a chain, advancedStrat plays a move that doesn't complete a
+     * box but allows the other player to score 2.  The benefit to this move is that
+     * the other player must give us a chain to claim after taking the two we have sacrificed
+     * @param b Box b to start the advanced strat at
+     */
     public void advancedStrat(Box b) {
         Box.Side startSide = getOpenSide(b);
         Box partner = currentBoard.getPartner(b, startSide);
@@ -173,34 +214,14 @@ public class AI {
                 break;
 
         }
-        currentBoard.play(partnerSide, this.player, partner.getxVal(), partner.getyVal());
+        currentBoard.play(partnerSide, partner.getxVal(), partner.getyVal());
     }
 
-
-    public int playChain(Box b, int stop) {
-        int numMoves = 0;
-        boolean lastMove = false;
-        while (!lastMove && numMoves < stop) {
-            Box.Side side = getOpenSide(b);
-            Box tempBox = b;
-            if (currentBoard.hasPartner(b, side)) {
-                Box nextBox = currentBoard.getPartner(b, side);
-                b = nextBox;
-                lastMove = false;
-            } else {
-                lastMove = true;
-            }
-            this.currentBoard.play(side, this.player, b.getxVal(), b.getyVal());
-
-            numMoves += 1;
-        }
-        if (numMoves == stop) {
-
-        }
-
-        return numMoves;
-    }
-
+    /**
+     * duplicates the board put in
+     * @param gameBoard board to copy
+     * @return new duplicate board
+     */
     public Board duplicateBoard(Board gameBoard) {
         int n = gameBoard.getBoardSize();
         Board clone = new Board();
@@ -248,7 +269,7 @@ public class AI {
 
                 for (Box.Side side : Box.Side.values()) {
                     if (!bestBox.getSide(side) && playChain(bestBox) == score) {
-                        currentBoard.play(side, this.player, bestBox.getxVal(), bestBox.getyVal());
+                        currentBoard.play(side, bestBox.getxVal(), bestBox.getyVal());
                         madeMove = true;
 
                     }
@@ -272,7 +293,7 @@ public class AI {
             if (pointMoves.size() > 0 && determineSafeMove() && !madeMove) {
                 for (Box move : pointMoves) {
                     Box.Side side = getOpenSide(move);
-                    this.currentBoard.play(side, this.player, move.getxVal(), move.getyVal());
+                    this.currentBoard.play(side, move.getxVal(), move.getyVal());
                 }
                 madeMove = true;
             }

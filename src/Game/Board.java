@@ -175,7 +175,7 @@ public class Board implements Cloneable {
         b.setSide(s);
         b.checkClaimed(this.currentPlayer);
         if (hasPartner(b, s)) {
-            Box partner = getPartner(b, s)
+            Box partner = getPartner(b, s);
             switch (s) {
                 case NORTH:
                     partner.setSide(Box.Side.SOUTH);
@@ -195,6 +195,12 @@ public class Board implements Cloneable {
         }
     }
 
+    /**
+     * updates the score after checking a boxes state
+     * @param i 1 dimension of box
+     * @param j 2 dimension of box
+     * @return
+     */
     public boolean updateScore(int i, int j) {
         int claim = boxArray[i][j].getClaimed();
         if (claim != 0) {
@@ -215,6 +221,9 @@ public class Board implements Cloneable {
 
     }
 
+    /**
+     * prints the entire board
+     */
     public void completePrint() {
         for (int j = 0; j < this.boxArray.length; j++) {
             String line1 = "";
@@ -268,12 +277,11 @@ public class Board implements Cloneable {
      * If user tries to claim a side taken return false
      *
      * @param bs     box side
-     * @param player the player
      * @param i      index of the row
      * @param j      index of the column
      * @return true or false
      */
-    public boolean play(Box.Side bs, Users player, int i, int j) {
+    public boolean play(Box.Side bs, int i, int j) {
         boolean boxSide = boxArray[i][j].getSide(bs);
         Box box1 = boxArray[i][j];
         boolean score2 = false;
@@ -304,22 +312,22 @@ public class Board implements Cloneable {
      * 0 0 0 0
      * 0 0 0 0
      * 0 0 0 0
-     * <p>
+     *
      * 2 1 0 0
      * 0 0 0 0
      * 0 0 0 0
      * 0 0 0 0
-     * <p>
+     *
      * ------
      * |2||1||0  0
      * ------
      * ------
      * 0  0  0  0
-     * <p>
-     * <p>
+     *
+     *
      * 0  0  0  0
-     * <p>
-     * <p>
+     *
+     *
      * 0  0  0  0
      */
     public static void test1() {
@@ -329,15 +337,15 @@ public class Board implements Cloneable {
         Users p1 = Users.PLAYER1;
         Users p2 = Users.PLAYER2;
 
-        b.play(Box.Side.EAST, p1, 0, 0);
-        b.play(Box.Side.NORTH, p2, 0, 0);
-        b.play(Box.Side.SOUTH, p1, 0, 0);
-        b.play(Box.Side.WEST, p2, 0, 0);
+        b.play(Box.Side.EAST, 0, 0);
+        b.play(Box.Side.NORTH, 0, 0);
+        b.play(Box.Side.SOUTH, 0, 0);
+        b.play(Box.Side.WEST, 0, 0);
         System.out.println(b);
 
-        b.play(Box.Side.NORTH, p1, 1, 0);
-        b.play(Box.Side.EAST, p2, 1, 0);
-        b.play(Box.Side.SOUTH, p1, 1, 0);
+        b.play(Box.Side.NORTH, 1, 0);
+        b.play(Box.Side.EAST, 1, 0);
+        b.play(Box.Side.SOUTH, 1, 0);
         System.out.println(b);
         b.completePrint();
     }
