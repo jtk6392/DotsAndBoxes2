@@ -1,5 +1,7 @@
 package Game;
 
+import java.util.Scanner;
+
 public class Board implements Cloneable {
 
     /**
@@ -42,6 +44,14 @@ public class Board implements Cloneable {
         }
         score = new int[3];
         score[2] = n * n;  // total score
+    }
+
+    /**
+     * returns current player
+     * @return a user
+     */
+    public Users getCurrentPlayer() {
+        return this.currentPlayer;
     }
 
     /**
@@ -197,6 +207,7 @@ public class Board implements Cloneable {
 
     /**
      * updates the score after checking a boxes state
+     *
      * @param i 1 dimension of box
      * @param j 2 dimension of box
      * @return
@@ -276,9 +287,9 @@ public class Board implements Cloneable {
      * and update and check and see if a box if finished.
      * If user tries to claim a side taken return false
      *
-     * @param bs     box side
-     * @param i      index of the row
-     * @param j      index of the column
+     * @param bs box side
+     * @param i  index of the row
+     * @param j  index of the column
      * @return true or false
      */
     public boolean play(Box.Side bs, int i, int j) {
@@ -312,22 +323,22 @@ public class Board implements Cloneable {
      * 0 0 0 0
      * 0 0 0 0
      * 0 0 0 0
-     *
+     * <p>
      * 2 1 0 0
      * 0 0 0 0
      * 0 0 0 0
      * 0 0 0 0
-     *
+     * <p>
      * ------
      * |2||1||0  0
      * ------
      * ------
      * 0  0  0  0
-     *
-     *
+     * <p>
+     * <p>
      * 0  0  0  0
-     *
-     *
+     * <p>
+     * <p>
      * 0  0  0  0
      */
     public static void test1() {
@@ -350,6 +361,20 @@ public class Board implements Cloneable {
         b.completePrint();
     }
 
+    public static void playSout() {
+        Board b = new Board();
+
+        Users p1 = Users.PLAYER1;
+        Users p2 = Users.PLAYER2;
+        Scanner sc = new Scanner();
+        boolean done = false;
+
+        while (!done) {
+            b.completePrint();
+            System.out.println(b.get);
+        }
+    }
+
 
     /**
      * Test function for board.
@@ -357,6 +382,6 @@ public class Board implements Cloneable {
      * @param args unused.
      */
     public static void main(String[] args) {
-        test1();
+
     }
 }
