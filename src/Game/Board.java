@@ -48,6 +48,7 @@ public class Board implements Cloneable {
 
     /**
      * returns current player
+     *
      * @return a user
      */
     public Users getCurrentPlayer() {
@@ -366,12 +367,35 @@ public class Board implements Cloneable {
 
         Users p1 = Users.PLAYER1;
         Users p2 = Users.PLAYER2;
-        Scanner sc = new Scanner();
+        Scanner sc = new Scanner(System.in);
         boolean done = false;
 
         while (!done) {
             b.completePrint();
-            System.out.println(b.get);
+            System.out.println(b.getCurrentPlayer() + "'s move.");
+            System.out.println("Enter box (x,y) and side (N,S,E,W) { int int char }");
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            String d = sc.next();
+            Box.Side side = Box.Side.NORTH;
+
+            switch (d) {
+                case "N":
+                    side = Box.Side.NORTH;
+                    break;
+                case "S":
+                    side = Box.Side.SOUTH;
+                    break;
+                case "E":
+                    side = Box.Side.EAST;
+                    break;
+                case "W":
+                    side = Box.Side.WEST;
+                    break;
+            }
+            done = !b.play(side, x, y);
+
+
         }
     }
 
@@ -382,6 +406,6 @@ public class Board implements Cloneable {
      * @param args unused.
      */
     public static void main(String[] args) {
-
+        playSout();
     }
 }
