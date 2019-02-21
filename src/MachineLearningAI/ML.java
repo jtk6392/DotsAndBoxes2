@@ -4,16 +4,22 @@
 //import Game.Box;
 //import Game.Users;
 //
+//import py4j.GatewayServer;
 //import java.io.IOException;
 //import java.util.ArrayList;
 //
+///**
+// * A class that represents a Machine Learning AI.
+// */
 //public class ML {
 //    private Board currentBoard;
-//    private static PythonInterface server = new PythonInterface();
 //    private Users player = Users.PLAYER1;
 //
-//    // Each box: Claimed: add 0, 1, 2
-//    // North > South > East > West
+//    /**
+//     * Each box: Claimed: add 0, 1, 2
+//     * Order of information: North > South > East > West
+//     * @return An arraylist of integers to be passed to tensorflow.
+//     */
 //    private ArrayList<Integer> grabData() {
 //        ArrayList<Integer> data = new ArrayList<>(0);
 //        for(int i = 0; i < currentBoard.getBoardSize(); i++) {
@@ -28,20 +34,18 @@
 //        return data;
 //    }
 //
+//    /**
+//     * Connects to a python script to determine the play to be made.
+//     * @param currentBoard The current board as it stands.
+//     */
 //    public void makePlay(Board currentBoard) {
 //        this.currentBoard = currentBoard;
-//        ArrayList<Integer> send = new ArrayList<>(0);
 //
-//        send = grabData();
-//        server.setSendData(send);
+//        GatewayServer gatewayServer = new GatewayServer(new PythonInterface(grabData()));
+//        gatewayServer.start();
 //
-//        try {
-//            server.openServer();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        ArrayList<Integer> moves = server.getRecieveData();
-//        currentBoard.play(Box.Side.values()[moves.get(2)], this.player, moves.get(0), moves.get(1));
+//        ArrayList<Integer> moves = gatewayServer.getRecieveData();
+//        currentBoard.play(Box.Side.values()[moves.get(2)], moves.get(0), moves.get(1));
 //    }
 //
 //    public static void main(String[] args) {
